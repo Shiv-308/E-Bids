@@ -8,10 +8,10 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/health", (req, res) => {
+  res.send("Backend is running!");
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Backend listening on port ${port}`);
 });
