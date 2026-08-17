@@ -1,11 +1,12 @@
 import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar/Navbar'
+
 const App = () => {
   return (
     <div>
       <BrowserRouter>
-        <Navbar />
         <Routes>
           <Route path="/" element={<div>Home</div>} />
         </Routes>
