@@ -1,105 +1,117 @@
-import React from 'react';
-import { Building2, Truck, Search, Shield, Clock, TrendingUp, FileText, CheckCircle2, DollarSign, Target, Zap, Globe, Briefcase } from 'lucide-react';
-import Section from '../components/Section';
-import SectionHeader from '../components/SectionHeader';
-import Card from '../components/Card';
+import React, { useState } from 'react';
+import { EyeOff, Scale, ShieldCheck, TrendingUp, FileText, Zap } from 'lucide-react';
 
 const Features = () => {
+  const [activeRole, setActiveRole] = useState('buyers');
+
   const buyerFeatures = [
     {
-      icon: Search,
-      title: 'Find Qualified Suppliers',
-      description: 'Access a database of verified suppliers with ratings and reviews.'
+      icon: EyeOff,
+      title: 'No shop visits',
+      description: 'Sellers bring offers to you — never chase a vendor or website again.'
+    },
+    {
+      icon: Scale,
+      title: 'Compare fairly',
+      description: 'All bids in one place with standardized tender files for easy evaluation.'
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Full control',
+      description: 'You set the criteria and decide when to close and award the tender.'
+    }
+  ];
+
+  const sellerFeatures = [
+    {
+      icon: TrendingUp,
+      title: 'Direct commercial leads',
+      description: 'Get verified tender notifications from hotels, offices, and factories looking to buy.'
     },
     {
       icon: FileText,
-      title: 'Streamline Documentation',
-      description: 'Automate tender creation, bid evaluation, and communication.'
+      title: 'Standardized bid submission',
+      description: 'Upload structured tender files and quote prices in a transparent format.'
     },
     {
-      icon: Shield,
-      title: 'Ensure Compliance',
-      description: 'Built-in verification and audit trails for regulatory compliance.'
+      icon: Zap,
+      title: 'Zero platform commission',
+      description: 'Keep 100% of your earnings. No hidden transaction fees or order cuts.'
     }
   ];
 
-  const supplierFeatures = [
-    {
-      icon: Target,
-      title: 'Discover Opportunities',
-      description: 'Get notified about relevant tenders matching your business profile.'
-    },
-    {
-      icon: CheckCircle2,
-      title: 'Submit Winning Bids',
-      description: 'Professional bid submission with document management and tracking.'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Scale Your Business',
-      description: 'Build reputation and win more contracts with transparent processes.'
-    }
-  ];
+  const features = activeRole === 'buyers' ? buyerFeatures : sellerFeatures;
 
   return (
-    <Section id="features" bgColor="white">
-      <SectionHeader
-        title="Built for Both Sides of the Deal"
-        subtitle="Whether you're buying or selling, our platform has the tools you need"
-      />
-      
-      <div className="grid md:grid-cols-2 gap-12">
-        {/* For Buyers */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-              <DollarSign size={24} className="text-black" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900">For Buyers</h3>
+    <section id="features" className="py-20 bg-white border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header with Switcher */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="space-y-2">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
+              Built for both sides of the deal
+            </h2>
+            <p className="text-base text-gray-500 font-normal">
+              Switch the view to see what you get.
+            </p>
           </div>
-          <div className="space-y-4">
-            {buyerFeatures.map((feature, index) => (
-              <Card key={index} hover={true}>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <feature.icon size={20} className="text-black" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">{feature.title}</h4>
-                    <p className="text-sm text-gray-600">{feature.description}</p>
-                  </div>
-                </div>
-              </Card>
-            ))}
+
+          {/* Toggle Switcher Pill */}
+          <div className="inline-flex items-center p-1 bg-gray-100/80 rounded-full border border-gray-200/80 self-start md:self-auto">
+            <button
+              onClick={() => setActiveRole('buyers')}
+              className={`px-5 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all duration-200 ${
+                activeRole === 'buyers'
+                  ? 'bg-white text-gray-900 shadow-xs border border-gray-200/60'
+                  : 'text-gray-500 hover:text-gray-900'
+              }`}
+            >
+              For Buyers
+            </button>
+            <button
+              onClick={() => setActiveRole('sellers')}
+              className={`px-5 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all duration-200 ${
+                activeRole === 'sellers'
+                  ? 'bg-white text-gray-900 shadow-xs border border-gray-200/60'
+                  : 'text-gray-500 hover:text-gray-900'
+              }`}
+            >
+              For Sellers
+            </button>
           </div>
         </div>
 
-        {/* For Suppliers */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-              <Briefcase size={24} className="text-black" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900">For Suppliers</h3>
-          </div>
-          <div className="space-y-4">
-            {supplierFeatures.map((feature, index) => (
-              <Card key={index} hover={true}>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <feature.icon size={20} className="text-black" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">{feature.title}</h4>
-                    <p className="text-sm text-gray-600">{feature.description}</p>
-                  </div>
+        {/* 3 Feature Cards Grid */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {features.map((item, index) => {
+            const IconComp = item.icon;
+            return (
+              <div
+                key={index}
+                className="bg-white rounded-2xl p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-gray-300 transition-all duration-200"
+              >
+                {/* Icon Box */}
+                <div className="w-10 h-10 bg-gray-100/80 rounded-xl flex items-center justify-center mb-6">
+                  <IconComp size={20} className="text-gray-800" />
                 </div>
-              </Card>
-            ))}
-          </div>
+
+                {/* Title */}
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  {item.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            );
+          })}
         </div>
+
       </div>
-    </Section>
+    </section>
   );
 };
 

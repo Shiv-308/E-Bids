@@ -1,85 +1,77 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import Section from '../components/Section';
-import SectionHeader from '../components/SectionHeader';
+import { ChevronDown } from 'lucide-react';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   const faqs = [
     {
-      question: 'How do I get started with E-Bids?',
-      answer: 'Getting started is easy. Simply sign up for an account, complete your profile, and you can start creating or responding to tenders immediately. Our onboarding process takes less than 5 minutes.'
+      question: 'Is there any payment or order handling?',
+      answer: 'No. SupplyNest is strictly a tender discovery and proposal evaluation platform. No payments, escrow, or order generation take place on the platform, keeping the process simple, transparent, and fee-free.'
     },
     {
-      question: 'Is E-Bids free to use?',
-      answer: 'Yes! E-Bids is completely free to use for all users. You can create tenders, submit bids, and manage contracts without any cost. No credit card or payment required.'
+      question: 'Who can post a requirement?',
+      answer: 'Any private business owner, hotel manager, facility manager, shop owner, or corporate procurement officer can post tender requirements for free to receive competitive seller offers.'
     },
     {
-      question: 'How are suppliers verified?',
-      answer: 'We have a rigorous verification process that includes business registration checks, document verification, and reference checks. This ensures you only deal with legitimate and qualified suppliers.'
-    },
-    {
-      question: 'Can I integrate E-Bids with my existing systems?',
-      answer: 'Absolutely. E-Bids offers API integrations with popular ERP systems, accounting software, and procurement tools. Our team can also help with custom integrations for enterprise clients.'
-    },
-    {
-      question: 'What kind of support do you offer?',
-      answer: 'We provide 24/7 customer support via chat, email, and phone. Our average response time is under 2 hours to help you with any questions or issues.'
-    },
-    {
-      question: 'Is my data secure?',
-      answer: 'Security is our top priority. We use bank-level encryption, regular security audits, and comply with GDPR and other data protection regulations. Your data is stored in secure, redundant data centers.'
+      question: 'How is a winner selected?',
+      answer: 'You review all submitted tender files side-by-side, compare price quotes and specification folders, and click "Award Tender" to notify your winning vendor directly.'
     }
   ];
 
-  return (
-    <Section id="faq" bgColor="white">
-      <SectionHeader
-        title="Frequently Asked Questions"
-        subtitle="Everything you need to know about our platform"
-      />
-      
-      <div className="max-w-3xl mx-auto space-y-4">
-        {faqs.map((faq, index) => (
-          <div
-            key={index}
-            className="border border-gray-200 rounded-xl overflow-hidden"
-          >
-            <button
-              className="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors"
-              onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
-            >
-              <span className="font-semibold text-gray-900 text-left">
-                {faq.question}
-              </span>
-              {openIndex === index ? (
-                <ChevronUp size={20} className="text-gray-500 flex-shrink-0 ml-4" />
-              ) : (
-                <ChevronDown size={20} className="text-gray-500 flex-shrink-0 ml-4" />
-              )}
-            </button>
-            {openIndex === index && (
-              <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
-                <p className="text-gray-600">{faq.answer}</p>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+  const toggleFAQ = (index) => {
+    setOpenIndex(openIndex === index ? -1 : index);
+  };
 
-      {/* CTA */}
-      <div className="mt-12 text-center">
-        <p className="text-gray-600 mb-4">Still have questions?</p>
-        <a
-          href="#"
-          className="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center gap-2"
-        >
-          Contact our support team
-          <ChevronDown size={16} className="rotate-[-90deg]" />
-        </a>
+  return (
+    <section id="faq" className="py-20 bg-white border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          
+          {/* Left Column Header */}
+          <div className="lg:col-span-5 space-y-3">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
+              Frequently asked
+            </h2>
+            <p className="text-base text-gray-500 font-normal">
+              The essentials about our MVP tender flow.
+            </p>
+          </div>
+
+          {/* Right Column Accordion Stack */}
+          <div className="lg:col-span-7 space-y-4">
+            {faqs.map((faq, index) => {
+              const isOpen = openIndex === index;
+              return (
+                <div
+                  key={index}
+                  className="bg-white rounded-2xl border border-gray-200/80 shadow-2xs overflow-hidden transition-all duration-200"
+                >
+                  <button
+                    onClick={() => toggleFAQ(index)}
+                    className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-semibold text-gray-900 text-base hover:text-black transition-colors"
+                  >
+                    <span>{faq.question}</span>
+                    <div className={`w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center transition-transform duration-200 ${
+                      isOpen ? 'rotate-180 bg-gray-100' : ''
+                    }`}>
+                      <ChevronDown size={18} className="text-gray-600" />
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-5 pb-6 sm:px-6 sm:pb-6 text-xs sm:text-sm text-gray-500 leading-relaxed border-t border-gray-100/60 pt-4 animate-in fade-in duration-200">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
       </div>
-    </Section>
+    </section>
   );
 };
 

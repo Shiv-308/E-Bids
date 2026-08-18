@@ -1,65 +1,88 @@
 import React from 'react';
-import { FileText, Users, Award, CheckCircle2, PenTool, Send, Handshake } from 'lucide-react';
-import Section from '../components/Section';
-import SectionHeader from '../components/SectionHeader';
-import Card from '../components/Card';
+import { FileText, Mail, Scale, Clock } from 'lucide-react';
 
-const HowItWorks = () => {
+const HowItWorks = ({ onOpenPostModal }) => {
   const steps = [
     {
-      icon: PenTool,
-      title: 'Create Tender',
-      description: 'Publish your tender requirements with detailed specifications and deadlines in minutes.'
+      icon: FileText,
+      step: 'STEP 1',
+      title: 'Post a requirement',
+      description: 'Describe your need and attach a description folder with specs and quantities.'
     },
     {
-      icon: Send,
-      title: 'Receive Bids',
-      description: 'Get qualified bids from verified suppliers. Compare proposals side by side.'
+      icon: Mail,
+      step: 'STEP 2',
+      title: 'Receive seller bids',
+      description: 'Service providers submit tender files with their offers and selection criteria.'
     },
     {
-      icon: Handshake,
-      title: 'Award Contract',
-      description: 'Evaluate bids, select the best supplier, and manage contracts all in one place.'
+      icon: Scale,
+      step: 'STEP 3',
+      title: 'Evaluate & compare',
+      description: 'Review all tender files side by side and shortlist the strongest bid.'
+    },
+    {
+      icon: Clock,
+      step: 'STEP 4',
+      title: 'Award & close',
+      description: 'Select a winner, close the tender, and notify the awarded seller instantly.'
     }
   ];
 
   return (
-    <Section id="how-it-works" bgColor="light">
-      <SectionHeader
-        title="How the Tender Flow Works"
-        subtitle="A simple, transparent process that saves time and ensures fair competition"
-      />
-      <div className="grid md:grid-cols-3 gap-8">
-        {steps.map((step, index) => (
-          <div key={index} className="relative">
-            <Card hover={true} className="h-full">
-              <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-                  <step.icon size={32} className="text-black" />
-                </div>
-                <div className="absolute top-8 right-8 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-bold text-sm">
-                  {index + 1}
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
-              </div>
-            </Card>
-            {/* Connector line for desktop */}
-            {index < steps.length - 1 && (
-              <div className="hidden md:block absolute top-1/2 -right-4 w-8 border-t-2 border-dashed border-gray-300"></div>
-            )}
-          </div>
-        ))}
-      </div>
-      
-      {/* Bottom CTA */}
-      <div className="mt-12 text-center">
-        <div className="inline-flex items-center gap-2 text-gray-600">
-          <CheckCircle2 size={20} className="text-green-500" />
-          <span>End-to-end tracking and notifications included</span>
+    <section id="how-it-works" className="py-20 bg-white border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
+            How the tender flow works
+          </h2>
+          <p className="text-base sm:text-lg text-gray-500 font-normal">
+            Four simple steps — no payments or order generation, just a clean selection process.
+          </p>
         </div>
+
+        {/* 4 Steps Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {steps.map((item, index) => {
+            const IconComponent = item.icon;
+            return (
+              <div
+                key={index}
+                onClick={index === 0 ? onOpenPostModal : undefined}
+                className={`bg-white rounded-2xl p-6 border border-gray-200/80 shadow-2xs hover:shadow-md hover:border-gray-300 transition-all duration-200 flex flex-col justify-between ${
+                  index === 0 ? 'cursor-pointer' : ''
+                }`}
+              >
+                <div>
+                  {/* Icon Badge */}
+                  <div className="w-10 h-10 bg-gray-100/80 rounded-xl flex items-center justify-center mb-6">
+                    <IconComponent size={20} className="text-gray-800" />
+                  </div>
+
+                  {/* Step Label */}
+                  <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">
+                    {item.step}
+                  </span>
+
+                  {/* Step Title */}
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">
+                    {item.title}
+                  </h3>
+
+                  {/* Step Description */}
+                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
       </div>
-    </Section>
+    </section>
   );
 };
 
