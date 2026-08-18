@@ -12,24 +12,16 @@ const FAQ = () => {
       answer: 'Getting started is easy. Simply sign up for an account, complete your profile, and you can start creating or responding to tenders immediately. Our onboarding process takes less than 5 minutes.'
     },
     {
-      question: 'Is E-Bids free to use?',
-      answer: 'Yes! E-Bids is completely free to use for all users. You can create tenders, submit bids, and manage contracts without any cost. No credit card or payment required.'
+      question: 'What we offer?',
+      answer: 'We offer B2B procurement platform that connects buyers and sellers in a transparent, efficient, and secure environment.'
     },
     {
-      question: 'How are suppliers verified?',
-      answer: 'We have a rigorous verification process that includes business registration checks, document verification, and reference checks. This ensures you only deal with legitimate and qualified suppliers.'
+      question: 'How does the bidding process work?',
+      answer: 'Our platform allows buyers to create detailed tender requests with specifications, timelines, and budgets. Suppliers can then submit competitive bids, and buyers can compare options side by side to make informed decisions.'
     },
     {
-      question: 'Can I integrate E-Bids with my existing systems?',
-      answer: 'Absolutely. E-Bids offers API integrations with popular ERP systems, accounting software, and procurement tools. Our team can also help with custom integrations for enterprise clients.'
-    },
-    {
-      question: 'What kind of support do you offer?',
-      answer: 'We provide 24/7 customer support via chat, email, and phone. Our average response time is under 2 hours to help you with any questions or issues.'
-    },
-    {
-      question: 'Is my data secure?',
-      answer: 'Security is our top priority. We use bank-level encryption, regular security audits, and comply with GDPR and other data protection regulations. Your data is stored in secure, redundant data centers.'
+      question: 'How is a winner selected?',
+      answer: 'Winners are selected based on a combination of factors including price, quality, delivery time, and supplier reputation. Buyers can set their own criteria and weighting for each factor, with final decision made by the buyer.'
     }
   ];
 
