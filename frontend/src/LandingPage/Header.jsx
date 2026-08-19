@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X, SquarePen, ShoppingCart, Package, Clock, Mail } from 'lucide-react';
 
 const Header = ({ onOpenPostModal }) => {
@@ -19,14 +20,14 @@ const Header = ({ onOpenPostModal }) => {
         <div className="flex items-center justify-between h-20">
 
           {/* Brand Logo */}
-          <a href="#" className="flex items-center gap-2.5 group">
+          <Link to="/" className="flex items-center gap-2.5 group text-decoration-none">
             <div className="w-9 h-9 bg-black rounded-lg flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
               <SquarePen className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold text-gray-900">
               SupplyNest
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation Center */}
           <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
@@ -71,18 +72,18 @@ const Header = ({ onOpenPostModal }) => {
 
           {/* Action Buttons Right */}
           <div className="hidden md:flex items-center gap-3">
-            <button
-              onClick={onOpenPostModal}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+            <Link
+              to="/signin"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors text-decoration-none"
             >
               Sign In
-            </button>
-            <button
-              onClick={onOpenPostModal}
-              className="px-5 py-2 text-sm font-semibold text-white bg-black hover:bg-gray-800 rounded-full shadow-xs hover:shadow transition-all"
+            </Link>
+            <Link
+              to="/signup"
+              className="px-5 py-2 text-sm font-semibold text-white bg-black hover:bg-gray-800 rounded-full shadow-xs hover:shadow transition-all text-decoration-none"
             >
               Get Started
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -130,18 +131,20 @@ const Header = ({ onOpenPostModal }) => {
               </button>
 
               <div className="pt-2 flex flex-col gap-2">
-                <button
-                  onClick={() => { onOpenPostModal(); setIsMenuOpen(false); }}
-                  className="w-full py-2.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-xl"
+                <Link
+                  to="/signin"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full py-2.5 text-center text-sm font-medium text-gray-700 bg-gray-100 rounded-xl text-decoration-none"
                 >
                   Sign In
-                </button>
-                <button
-                  onClick={() => { onOpenPostModal(); setIsMenuOpen(false); }}
-                  className="w-full py-2.5 text-sm font-semibold text-white bg-black rounded-xl"
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full py-2.5 text-center text-sm font-semibold text-white bg-black rounded-xl text-decoration-none"
                 >
                   Get Started
-                </button>
+                </Link>
               </div>
             </div>
           </nav>
