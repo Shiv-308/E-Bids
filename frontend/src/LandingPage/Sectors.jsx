@@ -1,62 +1,75 @@
 import React from 'react';
-import { Factory, Building, HeartPulse, ShoppingBag, Zap, Plane, Cpu, Wrench, Microscope, Store, Battery, Truck } from 'lucide-react';
-import Section from '../components/Section';
-import SectionHeader from '../components/SectionHeader';
+import { Building2, Building, Factory } from 'lucide-react';
 
-const Sectors = () => {
+const Sectors = ({ onOpenPostModal }) => {
   const sectors = [
-    { icon: Factory, name: 'Manufacturing', count: '120+' },
-    { icon: Building, name: 'Construction', count: '85+' },
-    { icon: HeartPulse, name: 'Healthcare', count: '65+' },
-    { icon: Store, name: 'Retail', count: '90+' },
-    { icon: Zap, name: 'Energy', count: '45+' },
-    { icon: Truck, name: 'Logistics', count: '55+' }
+    {
+      title: 'Hotels & Hospitality',
+      icon: Building2,
+      image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80',
+    },
+    {
+      title: 'Offices & Corporates',
+      icon: Building,
+      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=80',
+    },
+    {
+      title: 'Industries & Shops',
+      icon: Factory,
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=80',
+    }
   ];
 
   return (
-    <Section id="sectors" bgColor="light">
-      <SectionHeader
-        title="Trusted Across Private Sectors"
-        subtitle="Industry leaders rely on our platform for their procurement needs"
-      />
-      
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-        {sectors.map((sector, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 cursor-pointer border border-gray-100"
-          >
-            <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <sector.icon size={28} className="text-black" />
-            </div>
-            <h3 className="font-semibold text-gray-900 mb-1">{sector.name}</h3>
-            <p className="text-sm text-gray-500">{sector.count} companies</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Stats Bar */}
-      <div className="mt-12 bg-white rounded-xl p-8 border border-gray-100">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div>
-            <p className="text-3xl md:text-4xl font-bold text-black mb-2">500+</p>
-            <p className="text-gray-600">Active Companies</p>
-          </div>
-          <div>
-            <p className="text-3xl md:text-4xl font-bold text-black mb-2">$2.4B</p>
-            <p className="text-gray-600">Tender Value</p>
-          </div>
-          <div>
-            <p className="text-3xl md:text-4xl font-bold text-black mb-2">98%</p>
-            <p className="text-gray-600">Satisfaction Rate</p>
-          </div>
-          <div>
-            <p className="text-3xl md:text-4xl font-bold text-black mb-2">24/7</p>
-            <p className="text-gray-600">Support Available</p>
-          </div>
+    <section id="sectors" className="py-20 bg-white border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
+            Trusted across private sectors
+          </h2>
+          <p className="text-base sm:text-lg text-gray-500 font-normal">
+            From boutique hotels to manufacturing floors.
+          </p>
         </div>
+
+        {/* 3 Sector Image Cards Grid */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {sectors.map((sector, index) => {
+            const IconComp = sector.icon;
+            return (
+              <div
+                key={index}
+                onClick={onOpenPostModal}
+                className="relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group cursor-pointer h-64 sm:h-72 border border-gray-100"
+              >
+                {/* Background Image */}
+                <img
+                  src={sector.image}
+                  alt={sector.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+
+                {/* Dark Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+                {/* Overlay Badge at Bottom Left */}
+                <div className="absolute bottom-5 left-5 right-5">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-2 bg-black/40 backdrop-blur-md rounded-xl border border-white/10 text-white shadow-sm">
+                    <IconComp size={16} className="text-white/90" />
+                    <span className="text-xs sm:text-sm font-semibold tracking-wide">
+                      {sector.title}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
       </div>
-    </Section>
+    </section>
   );
 };
 

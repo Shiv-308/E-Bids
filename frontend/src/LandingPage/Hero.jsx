@@ -1,93 +1,115 @@
 import React from 'react';
-import { ArrowRight, CheckCircle2, TrendingUp, Users, Award } from 'lucide-react';
-import Button from '../components/Button';
+import { ArrowRight, PlayCircle, FileText } from 'lucide-react';
 
-const Hero = () => {
+const Hero = ({ onOpenPostModal, onOpenTenderPreview }) => {
   return (
-    <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-gradient-to-b from-gray-50 to-white">
+    <section id="hero" className="pt-28 pb-16 md:pt-36 md:pb-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div>
-            <div className="inline-flex items-center bg-gray-100 text-gray-900 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <CheckCircle2 size={16} className="mr-2" />
-              Trusted by 500+ companies
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          {/* Left Hero Content */}
+          <div className="lg:col-span-7 space-y-6">
+            
+            {/* Pill Tag */}
+            <div className="inline-block">
+              <span className="px-3.5 py-1.5 rounded-full text-xs font-medium text-gray-700 bg-gray-100/80 border border-gray-200/80 tracking-tight">
+                The private sector GeM alternative
+              </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Streamline Your
-              <span className="text-black"> Tender Process</span>
+
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-[1.12]">
+              Let sellers come to you.<br />
+              Post once, get<br />
+              competitive bids.
             </h1>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Simplify procurement with our digital tender management platform. 
-              Connect buyers and suppliers seamlessly, save time, and make smarter decisions.
+
+            {/* Subtitle */}
+            <p className="text-base sm:text-lg text-gray-600 max-w-xl leading-relaxed">
+              A tender-style marketplace for private hotels, offices, shops and industries. Post your requirement, receive bids with tender files, and award the best offer — no shop visits, no cold calls.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="primary" size="lg">
-                Get Started
-                <ArrowRight size={20} className="ml-2" />
-              </Button>
-              <Button variant="outline" size="lg">
-                Learn More
-              </Button>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <button
+                onClick={onOpenPostModal}
+                className="px-6 py-3.5 bg-black hover:bg-gray-800 text-white font-semibold text-sm sm:text-base rounded-full flex items-center gap-2 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5"
+              >
+                <span>Post a Requirement</span>
+                <ArrowRight size={18} />
+              </button>
+
+              <button
+                onClick={onOpenTenderPreview}
+                className="px-6 py-3.5 bg-white hover:bg-gray-50 text-gray-800 font-semibold text-sm sm:text-base rounded-full border border-gray-200 flex items-center gap-2 shadow-xs transition-all"
+              >
+                <PlayCircle size={18} className="text-gray-700" />
+                <span>See How It Works</span>
+              </button>
             </div>
-            <div className="mt-8 flex items-center gap-6 text-sm text-gray-500">
-              <div className="flex items-center">
-                <CheckCircle2 size={16} className="text-green-500 mr-2" />
-                Free to use
+
+            {/* Metrics / Stats Row */}
+            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-100 max-w-lg">
+              <div>
+                <h4 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">2,400+</h4>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium">Verified sellers</p>
               </div>
-              <div className="flex items-center">
-                <CheckCircle2 size={16} className="text-green-500 mr-2" />
-                No setup required
+
+              <div>
+                <h4 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">8,900</h4>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium">Tenders posted</p>
               </div>
+
+              <div>
+                <h4 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">₹0</h4>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium">To post & bid</p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Hero Image Card */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative mx-auto max-w-md lg:max-w-none">
+              
+              {/* Photo Frame */}
+              <div className="relative rounded-3xl overflow-hidden shadow-xl border border-gray-100 group cursor-pointer" onClick={onOpenTenderPreview}>
+                <img
+                  src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1000&q=80"
+                  alt="Business partners shaking hands across meeting table"
+                  className="w-full h-[360px] sm:h-[400px] object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+
+                {/* Floating Tender Card Overlay at Bottom */}
+                <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-gray-100 transition-transform duration-300 group-hover:-translate-y-1">
+                  <div className="flex items-center justify-between gap-3">
+                    
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <FileText size={18} className="text-gray-800" />
+                      </div>
+                      <div>
+                        <h5 className="font-semibold text-gray-900 text-xs sm:text-sm">
+                          Tender #TD-4821 awarded
+                        </h5>
+                        <p className="text-[11px] sm:text-xs text-gray-500">
+                          7 bids received • closed in 3 days
+                        </p>
+                      </div>
+                    </div>
+
+                    <span className="px-3 py-1 bg-black text-white text-xs font-semibold rounded-full shadow-2xs">
+                      Closed
+                    </span>
+
+                  </div>
+                </div>
+
+              </div>
+
             </div>
           </div>
 
-          {/* Right Content - Hero Image/Illustration */}
-          <div className="relative">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                      <TrendingUp size={20} className="text-black" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-900">Active Tenders</p>
-                      <p className="text-sm text-gray-500">24 live opportunities</p>
-                    </div>
-                  </div>
-                  <span className="text-green-500 font-bold">+12%</span>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                      <Users size={20} className="text-gray-800" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-900">Bids Submitted</p>
-                      <p className="text-sm text-gray-500">156 this month</p>
-                    </div>
-                  </div>
-                  <span className="text-green-500 font-bold">+8%</span>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-                      <Award size={20} className="text-gray-700" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-900">Contracts Won</p>
-                      <p className="text-sm text-gray-500">$2.4M value</p>
-                    </div>
-                  </div>
-                  <span className="text-green-500 font-bold">+23%</span>
-                </div>
-              </div>
-            </div>
-            {/* Decorative elements */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 bg-gray-300 rounded-full opacity-20 blur-xl"></div>
-            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gray-400 rounded-full opacity-20 blur-xl"></div>
-          </div>
         </div>
       </div>
     </section>
