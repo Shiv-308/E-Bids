@@ -70,7 +70,7 @@ const Footer = ({ onOpenPostModal }) => {
               <div className="w-7 h-7 bg-white rounded-md flex items-center justify-center">
                 <SquarePen className="w-4 h-4 text-black" />
               </div>
-              <span className="font-bold text-white tracking-tight text-base">
+              <span className="font-bold text-white tracking-tight text-base">https://github.com/Shiv-308/E-Bids/pull/1/conflict?name=frontend%252Fsrc%252FLandingPage%252FFooter.jsx&ancestor_oid=7e0851947baed281c60e25ec863e52b8f7616c6a&base_oid=c9587a153c62470bf2244c26a5a0200bd98c4cf8&head_oid=aad50b2be05938dec6d11ce5a62f260b64d7c1cd
                 SupplyNest
               </span>
             </div>
@@ -81,6 +81,12 @@ const Footer = ({ onOpenPostModal }) => {
             </div>
 
           </div>
+
+
+          {/* Copyright */}
+          <p className="text-gray-400 text-sm">
+            © {currentYear} E-Bids
+          </p>
         </div>
       </div>
 
