@@ -5,10 +5,14 @@ const Footer = ({ onOpenPostModal }) => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
+  const currentYear = new Date().getFullYear();
+
   const handleSubscribe = (e) => {
     e.preventDefault();
+
     if (email) {
       setSubscribed(true);
+
       setTimeout(() => {
         setSubscribed(false);
         setEmail('');
@@ -23,17 +27,24 @@ const Footer = ({ onOpenPostModal }) => {
       {/* Ready to post banner section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
         <div className="max-w-3xl mx-auto space-y-4">
+
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
             Ready to post your first requirement?
           </h2>
+
           <p className="text-sm sm:text-base text-gray-400 font-normal max-w-xl mx-auto leading-relaxed">
-            Join the marketplace where sellers compete for your business. Free to post, free to bid.
+            Join the marketplace where sellers compete for your business.
+            Free to post, free to bid.
           </p>
 
           {/* Input & Button Form */}
-          <form onSubmit={handleSubscribe} className="pt-6 max-w-lg mx-auto">
+          <form
+            onSubmit={handleSubscribe}
+            className="pt-6 max-w-lg mx-auto"
+          >
             {!subscribed ? (
               <div className="flex flex-col sm:flex-row items-center gap-2 bg-gray-900/90 p-1.5 rounded-full border border-gray-800 focus-within:border-gray-600 transition-all shadow-md">
+
                 <input
                   type="email"
                   required
@@ -42,27 +53,37 @@ const Footer = ({ onOpenPostModal }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-5 py-2.5 text-sm sm:text-base bg-transparent text-white placeholder-gray-500 focus:outline-none rounded-full"
                 />
+
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-6 py-3 bg-white text-black hover:bg-gray-100 font-semibold text-sm sm:text-base rounded-full flex items-center justify-center gap-2 whitespace-nowrap shadow-xs hover:shadow transition-all flex-shrink-0 cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3 bg-white text-black hover:bg-gray-100 font-semibold text-sm sm:text-base rounded-full flex items-center justify-center gap-2 whitespace-nowrap shadow-sm hover:shadow transition-all flex-shrink-0 cursor-pointer"
                 >
                   <span>Get Started</span>
                   <ArrowRight size={18} />
                 </button>
+
               </div>
             ) : (
-              <div className="bg-gray-900/90 border border-green-500/40 p-3.5 rounded-full text-green-400 text-sm sm:text-base font-semibold flex items-center justify-center gap-2 shadow-md animate-in fade-in duration-200">
-                <CheckCircle2 size={18} className="text-green-400" />
-                <span>Redirecting to requirement setup...</span>
+              <div className="bg-gray-900/90 border border-green-500/40 p-3.5 rounded-full text-green-400 text-sm sm:text-base font-semibold flex items-center justify-center gap-2 shadow-md">
+                <CheckCircle2
+                  size={18}
+                  className="text-green-400"
+                />
+
+                <span>
+                  Redirecting to requirement setup...
+                </span>
               </div>
             )}
           </form>
+
         </div>
       </div>
 
       {/* Footer Bottom Bar */}
       <div className="border-t border-gray-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-xs sm:text-sm text-gray-400">
 
             {/* Logo */}
@@ -70,23 +91,19 @@ const Footer = ({ onOpenPostModal }) => {
               <div className="w-7 h-7 bg-white rounded-md flex items-center justify-center">
                 <SquarePen className="w-4 h-4 text-black" />
               </div>
-              <span className="font-bold text-white tracking-tight text-base">https://github.com/Shiv-308/E-Bids/pull/1/conflict?name=frontend%252Fsrc%252FLandingPage%252FFooter.jsx&ancestor_oid=7e0851947baed281c60e25ec863e52b8f7616c6a&base_oid=c9587a153c62470bf2244c26a5a0200bd98c4cf8&head_oid=aad50b2be05938dec6d11ce5a62f260b64d7c1cd
-                SupplyNest
+
+              <span className="font-bold text-white tracking-tight text-base">
+                E-Bids
               </span>
             </div>
 
             {/* Copyright */}
             <div>
-              © 2026 SupplyNest
+              © {currentYear} E-Bids
             </div>
 
           </div>
 
-
-          {/* Copyright */}
-          <p className="text-gray-400 text-sm">
-            © {currentYear} E-Bids
-          </p>
         </div>
       </div>
 
