@@ -27,7 +27,7 @@ const Header = ({ onOpenPostModal }) => {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-bold text-gray-900 leading-tight">
-                BidBazaar
+                SupplyNest
               </span>
               <span className="text-[11px] font-medium text-gray-500">
                 Tender-style marketplace
@@ -48,7 +48,7 @@ const Header = ({ onOpenPostModal }) => {
             </button>
 
             <Link
-              to="/browse-requirements"
+              to="/buyer-workspace"
               className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-full transition-colors text-decoration-none"
             >
               <ShoppingCart size={15} /> For Buyers

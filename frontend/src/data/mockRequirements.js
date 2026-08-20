@@ -1,18 +1,21 @@
-// Mock dataset and storage helpers for BidBazaar requirements
+// Mock dataset and storage helpers for SupplyNest requirements
 const INITIAL_REQUIREMENTS = [
   {
     id: 'req-1',
     category: 'Office Furniture',
-    location: 'Karnataka',
+    location: 'Bengaluru',
     type: 'Goods',
-    badge: 'Vendor-buyer',
+    badge: 'Active',
+    status: 'Active',
     title: '120 ergonomic office chairs for a 120-seat workspace',
     description: 'Buyer needs ergonomic chairs with warranty, delivery, and installation. Tender file attached for detailed specs and evaluation criteria.',
-    budget: '₹8L - ₹10L',
+    budget: '₹8L – ₹10L',
     budgetNum: 900000,
-    closing: '3 days left',
+    postedDate: 'Jun 18, 2024',
+    endingDate: 'Jun 28, 2024',
+    closing: 'Jun 28, 2024',
     closingDays: 3,
-    bidsCount: 15,
+    bidsCount: 18,
     filesCount: 1,
     publishedAt: 'Published 2 hours ago',
     attachedFiles: [
@@ -29,12 +32,15 @@ const INITIAL_REQUIREMENTS = [
     category: 'IT Services',
     location: 'Mumbai',
     type: 'Services',
-    badge: 'On-site / Tech support',
+    badge: 'Active',
+    status: 'Active',
     title: 'Managed network support for 12 branch offices',
     description: 'Buyer is seeking 24/7 IT support, SLA 1hr response times, and on-site support coverage across multiple locations.',
-    budget: '₹2L - ₹4L',
+    budget: '₹2L – ₹4L',
     budgetNum: 300000,
-    closing: '5 days left',
+    postedDate: 'Jun 16, 2024',
+    endingDate: 'Jun 24, 2024',
+    closing: 'Jun 24, 2024',
     closingDays: 5,
     bidsCount: 11,
     filesCount: 2,
@@ -54,12 +60,15 @@ const INITIAL_REQUIREMENTS = [
     category: 'Facility Supplies',
     location: 'Delhi NCR',
     type: 'Goods',
-    badge: 'Partial bids allowed',
+    badge: 'Closing soon',
+    status: 'Closing soon',
     title: 'Monthly procurement of cleaning and pantry supplies',
     description: 'Long recurring requirement with itemized quantities, delivery schedule, and vendor comparison table based on prices.',
-    budget: '₹1L - ₹3L',
+    budget: '₹1L – ₹3L',
     budgetNum: 200000,
-    closing: '8 days left',
+    postedDate: 'Jun 12, 2024',
+    endingDate: 'Jun 22, 2024',
+    closing: 'Jun 22, 2024',
     closingDays: 8,
     bidsCount: 24,
     filesCount: 0,
@@ -73,7 +82,7 @@ const INITIAL_REQUIREMENTS = [
   }
 ];
 
-const STORAGE_KEY = 'bidbazaar_requirements_list';
+const STORAGE_KEY = 'supplynest_requirements_list';
 
 export const getStoredRequirements = () => {
   try {

@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Plus, SlidersHorizontal, FileText, Scale, Lightbulb, BookmarkCheck, CheckCircle2 } from 'lucide-react';
+import { 
+  Search, 
+  Plus, 
+  SlidersHorizontal, 
+  FileText, 
+  Scale, 
+  Lightbulb, 
+  CheckCircle2 
+} from 'lucide-react';
 import NavbarHeader from '../../../components/NavbarHeader';
 import RequirementCard from '../../../components/RequirementCard';
 import ToggleSwitch from '../../../components/ToggleSwitch';
 import RequirementDetailModal from '../../../components/RequirementDetailModal';
 import BidSubmissionModal from '../../../components/BidSubmissionModal';
+import PostRequirementModal from '../../../LandingPage/PostRequirementModal';
 import { getStoredRequirements } from '../../../data/mockRequirements';
 
 const TenderList = () => {
@@ -16,14 +25,15 @@ const TenderList = () => {
   const [locationFilter, setLocationFilter] = useState('All locations');
   const [budgetFilter, setBudgetFilter] = useState('Any budget');
   const [sortFilter, setSortFilter] = useState('Latest');
-  const [quickUserType, setQuickUserType] = useState('For Buyers');
+  const [quickUserType, setQuickUserType] = useState('For Sellers');
   
-  // Toggle states matching photo
+  // Toggle states
   const [verifiedSellersOnly, setVerifiedSellersOnly] = useState(true);
   const [tenderFileRequired, setTenderFileRequired] = useState(false);
   const [filterSearchInput, setFilterSearchInput] = useState('');
 
   // Modals state
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [selectedRequirement, setSelectedRequirement] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isBidModalOpen, setIsBidModalOpen] = useState(false);
@@ -36,7 +46,7 @@ const TenderList = () => {
 
   const handleBidSuccess = (reqId) => {
     setRequirements(prev =>
-      prev.map(r => r.id === reqId ? { ...r, bidsCount: r.bidsCount + 1 } : r)
+      prev.map(r => r.id === reqId ? { ...r, bidsCount: (r.bidsCount || 0) + 1 } : r)
     );
     showToast('Your bid has been recorded successfully!');
   };
@@ -48,31 +58,27 @@ const TenderList = () => {
 
   // Filtering Logic
   const filteredRequirements = requirements.filter(item => {
-    // Search query filter
-    const q = searchQuery.toLowerCase() || filterSearchInput.toLowerCase();
+    const q = searchQuery.toLowerCase().trim() || filterSearchInput.toLowerCase().trim();
     if (q) {
-      const matchTitle = item.title.toLowerCase().includes(q);
-      const matchDesc = item.description.toLowerCase().includes(q);
-      const matchCat = item.category.toLowerCase().includes(q);
-      if (!matchTitle && !matchDesc && !matchCat) return false;
+      const matchTitle = item.title?.toLowerCase().includes(q);
+      const matchDesc = item.description?.toLowerCase().includes(q);
+      const matchCat = item.category?.toLowerCase().includes(q);
+      const matchLoc = item.location?.toLowerCase().includes(q);
+      if (!matchTitle && !matchDesc && !matchCat && !matchLoc) return false;
     }
 
-    // Category filter
     if (categoryFilter !== 'All categories' && item.category !== categoryFilter) {
       return false;
     }
 
-    // Location filter
-    if (locationFilter !== 'All locations' && !item.location.includes(locationFilter)) {
+    if (locationFilter !== 'All locations' && !item.location?.includes(locationFilter)) {
       return false;
     }
 
-    // Verified seller toggle
     if (verifiedSellersOnly && !item.verifiedSellerOnly) {
       return false;
     }
 
-    // Tender file required toggle
     if (tenderFileRequired && item.filesCount === 0) {
       return false;
     }
@@ -84,7 +90,7 @@ const TenderList = () => {
     <div className="min-h-screen bg-[#f9fafb] text-gray-900 font-sans selection:bg-gray-200">
       
       {/* Shared Navigation Bar */}
-      <NavbarHeader activeTabOverride="buyers" />
+      <NavbarHeader activeTabOverride="sellers" />
 
       {/* Toast Banner */}
       {toastMessage && (
@@ -96,21 +102,18 @@ const TenderList = () => {
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-        {/* Top Header Card Container matching Photo 1 */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-xs">
+        {/* Top Header Card Container */}
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-2xs">
           
-          {/* Top Pill Tag */}
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-gray-700 bg-gray-100/90 border border-gray-200/70 mb-4">
             <FileText size={14} className="text-gray-600" />
-            <span>Published requirements</span>
+            <span>Open Seller Opportunities</span>
           </div>
 
-          {/* Main Title */}
           <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight mb-3">
             Browse buyer requirements and submit competitive bids
           </h1>
 
-          {/* Subtitle */}
           <p className="text-sm sm:text-base text-gray-600 max-w-3xl leading-relaxed mb-6">
             Filter by category, location, budget, and view file requirements to find the most relevant opportunities for your business.
           </p>
@@ -121,20 +124,20 @@ const TenderList = () => {
               <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search title, keyword..."
+                placeholder="Search title, keyword, category..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-11 pr-4 py-3 bg-gray-50/80 border border-gray-200 rounded-full text-sm text-gray-900 focus:bg-white focus:border-black focus:ring-1 focus:ring-black outline-none transition-all"
               />
             </div>
 
-            <Link
-              to="/post-requirement"
-              className="w-full sm:w-auto px-6 py-3 bg-black hover:bg-gray-800 text-white font-semibold text-xs sm:text-sm rounded-full flex items-center justify-center gap-2 shadow-sm hover:shadow transition-all whitespace-nowrap text-decoration-none"
+            <button
+              onClick={() => setIsPostModalOpen(true)}
+              className="w-full sm:w-auto px-6 py-3 bg-black hover:bg-gray-800 text-white font-semibold text-xs sm:text-sm rounded-full flex items-center justify-center gap-2 shadow-xs hover:shadow transition-all whitespace-nowrap cursor-pointer"
             >
               <Plus size={16} />
               <span>Post Requirement</span>
-            </Link>
+            </button>
           </div>
 
           {/* Filters Control Card Box */}
@@ -155,8 +158,6 @@ const TenderList = () => {
                   <option value="Office Furniture">Office Furniture</option>
                   <option value="IT Services">IT Services</option>
                   <option value="Facility Supplies">Facility Supplies</option>
-                  <option value="Construction">Construction</option>
-                  <option value="Logistics">Logistics</option>
                 </select>
               </div>
 
@@ -171,10 +172,9 @@ const TenderList = () => {
                   className="w-full px-3.5 py-2.5 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-900 focus:border-black outline-none transition-all"
                 >
                   <option value="All locations">All locations</option>
-                  <option value="Karnataka">Karnataka</option>
+                  <option value="Bengaluru">Bengaluru</option>
                   <option value="Mumbai">Mumbai</option>
                   <option value="Delhi NCR">Delhi NCR</option>
-                  <option value="Tamil Nadu">Tamil Nadu</option>
                 </select>
               </div>
 
@@ -192,7 +192,6 @@ const TenderList = () => {
                   <option value="Under ₹2L">Under ₹2L</option>
                   <option value="₹2L - ₹5L">₹2L - ₹5L</option>
                   <option value="₹5L - ₹10L">₹5L - ₹10L</option>
-                  <option value="₹10L+">₹10L+</option>
                 </select>
               </div>
 
@@ -217,24 +216,15 @@ const TenderList = () => {
             {/* Quick Filters Row */}
             <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-gray-200/60">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-semibold text-gray-600 mr-1">Quick Filters:</span>
-                <button
-                  onClick={() => setQuickUserType('For Buyers')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-full transition-all cursor-pointer ${
-                    quickUserType === 'For Buyers'
-                      ? 'bg-black text-white shadow-2xs'
-                      : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                  }`}
+                <span className="text-xs font-semibold text-gray-600 mr-1">Quick view:</span>
+                <Link
+                  to="/buyer-workspace"
+                  className="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 text-decoration-none"
                 >
-                  For Buyers
-                </button>
+                  Buyer Workspace
+                </Link>
                 <button
-                  onClick={() => setQuickUserType('For Sellers')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-full transition-all cursor-pointer ${
-                    quickUserType === 'For Sellers'
-                      ? 'bg-black text-white shadow-2xs'
-                      : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                  }`}
+                  className="px-3.5 py-1.5 text-xs font-semibold rounded-full bg-black text-white shadow-2xs cursor-default"
                 >
                   For Sellers
                 </button>
@@ -326,7 +316,7 @@ const TenderList = () => {
         </section>
 
         {/* Bottom Section 1: Filter Summary */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-xs space-y-5">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-2xs space-y-5">
           <div>
             <h3 className="text-lg font-extrabold text-gray-900 tracking-tight">
               Filter summary
@@ -387,8 +377,8 @@ const TenderList = () => {
           </div>
         </div>
 
-        {/* Bottom Section 2: Relevant blocks matching photo */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-xs space-y-5">
+        {/* Bottom Section 2: Relevant blocks */}
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-2xs space-y-5">
           <div>
             <h3 className="text-lg font-extrabold text-gray-900 tracking-tight">
               Relevant blocks
@@ -443,6 +433,12 @@ const TenderList = () => {
         </div>
 
       </main>
+
+      {/* Post Requirement Modal */}
+      <PostRequirementModal
+        isOpen={isPostModalOpen}
+        onClose={() => setIsPostModalOpen(false)}
+      />
 
       {/* Detail View Modal */}
       <RequirementDetailModal

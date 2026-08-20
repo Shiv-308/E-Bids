@@ -6,6 +6,7 @@ import LandingPage from './LandingPage/LandingPage'
 import Login from './Auth/Login/Login'
 import Register from './Auth/Login/Register/Register'
 import TenderList from './Pages/Buyer/Tender/TenderList'
+import BuyerWorkspace from './Pages/Buyer/Tender/BuyerWorkspace'
 import CreateTender from './Pages/Buyer/Tender/CreateTender'
 
 const App = () => {
@@ -14,6 +15,8 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/buyer-workspace" element={<BuyerWorkspace />} />
+          <Route path="/my-requirements" element={<BuyerWorkspace />} />
           <Route path="/browse-requirements" element={<TenderList />} />
           <Route path="/tenders" element={<TenderList />} />
           <Route path="/requirements" element={<TenderList />} />
@@ -25,7 +28,6 @@ const App = () => {
           <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
-
     </div>
   )
 }

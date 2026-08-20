@@ -1,87 +1,134 @@
 import React, { useState } from 'react';
-import { Star, Clock, Eye, Plus } from 'lucide-react';
-import MetricBox from './MetricBox';
+import { Zap, ArrowRight, MoreHorizontal } from 'lucide-react';
 
 const RequirementCard = ({ requirement, onViewDetails, onBidNow }) => {
-  const [isBookmarked, setIsBookmarked] = useState(requirement.bookmarked || false);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  // Fallbacks to handle dynamic posted requirements
+  const postedDate = requirement.postedDate || requirement.publishedAt || 'Jun 18, 2024';
+  const endingDate = requirement.endingDate || requirement.closing || 'Jun 28, 2024';
+  const budget = requirement.budget || '₹5L - ₹10L';
+  const bidsCountText = requirement.bidsReceivedText || `${requirement.bidsCount || 0} bids`;
 
   return (
-    <div className="bg-white rounded-3xl p-5 sm:p-7 border border-gray-200/80 shadow-2xs hover:shadow-md transition-all duration-200 group">
+    <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-gray-200/80 shadow-2xs hover:shadow-xs transition-all duration-200 relative group">
       
-      {/* Top Tag Badges & Bookmark Star */}
+      {/* Top Category, Location, Status Badges */}
       <div className="flex items-center justify-between gap-2 mb-3">
         <div className="flex flex-wrap items-center gap-2">
           {requirement.category && (
-            <span className="px-3 py-1 bg-gray-100/90 hover:bg-gray-200/80 text-gray-800 text-xs font-semibold rounded-full border border-gray-200/60 transition-colors">
+            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full border border-gray-200/70">
               {requirement.category}
             </span>
           )}
           {requirement.location && (
-            <span className="px-3 py-1 bg-gray-100/90 hover:bg-gray-200/80 text-gray-700 text-xs font-medium rounded-full border border-gray-200/60 transition-colors">
+            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full border border-gray-200/70">
               {requirement.location}
             </span>
           )}
-          {requirement.badge && (
-            <span className="px-3 py-1 bg-gray-100/90 text-gray-700 text-xs font-medium rounded-full border border-gray-200/60">
-              {requirement.badge}
+          {(requirement.badge || requirement.status) && (
+            <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full border border-gray-200/70">
+              {requirement.badge || requirement.status}
             </span>
           )}
         </div>
+      </div>
+
+      {/* Title & Options dots */}
+      <div className="flex items-start justify-between gap-4 mb-3">
+        <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 tracking-tight leading-snug">
+          {requirement.title}
+        </h3>
+
+        <div className="relative">
+          <button
+            onClick={() => setShowDropdown(!showDropdown)}
+            className="p-1 text-gray-400 hover:text-gray-700 rounded-lg transition-colors cursor-pointer"
+            title="Options"
+          >
+            <MoreHorizontal size={20} />
+          </button>
+
+          {showDropdown && (
+            <div className="absolute right-0 mt-1 w-44 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-20 animate-in fade-in duration-150">
+              <button
+                onClick={() => { setShowDropdown(false); onViewDetails(requirement); }}
+                className="w-full text-left px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50"
+              >
+                View full details
+              </button>
+              {onBidNow && (
+                <button
+                  onClick={() => { setShowDropdown(false); onBidNow(requirement); }}
+                  className="w-full text-left px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  Submit a bid
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 4 Metric Boxes matching Photo */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 my-4">
+        
+        {/* POSTED DATE */}
+        <div className="bg-[#f4f4f5] sm:bg-[#f6f7f8] rounded-2xl p-4 flex flex-col justify-center">
+          <span className="text-[10px] sm:text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+            POSTED DATE
+          </span>
+          <span className="text-xs sm:text-sm font-bold text-gray-900">
+            {postedDate}
+          </span>
+        </div>
+
+        {/* ENDING DATE */}
+        <div className="bg-[#f4f4f5] sm:bg-[#f6f7f8] rounded-2xl p-4 flex flex-col justify-center">
+          <span className="text-[10px] sm:text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+            ENDING DATE
+          </span>
+          <span className="text-xs sm:text-sm font-bold text-gray-900">
+            {endingDate}
+          </span>
+        </div>
+
+        {/* BUDGET */}
+        <div className="bg-[#f4f4f5] sm:bg-[#f6f7f8] rounded-2xl p-4 flex flex-col justify-center">
+          <span className="text-[10px] sm:text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+            BUDGET
+          </span>
+          <span className="text-xs sm:text-sm font-bold text-gray-900">
+            {budget}
+          </span>
+        </div>
+
+        {/* BIDS RECEIVED */}
+        <div className="bg-[#f4f4f5] sm:bg-[#f6f7f8] rounded-2xl p-4 flex flex-col justify-center">
+          <span className="text-[10px] sm:text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+            BIDS RECEIVED
+          </span>
+          <span className="text-xs sm:text-sm font-bold text-gray-900">
+            {bidsCountText}
+          </span>
+        </div>
+
+      </div>
+
+      {/* Card Footer */}
+      <div className="flex items-center justify-between pt-3 border-t border-gray-100/80 mt-2">
+        <div className="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
+          <Zap size={14} className="text-gray-400" />
+          <span>Last updated recently</span>
+        </div>
 
         <button
-          onClick={() => setIsBookmarked(!isBookmarked)}
-          className="p-1.5 text-gray-400 hover:text-amber-500 rounded-full hover:bg-gray-50 transition-colors cursor-pointer"
-          title="Save requirement"
+          onClick={() => onViewDetails(requirement)}
+          className="flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-semibold text-gray-800 bg-white hover:bg-gray-50 border border-gray-200 rounded-full shadow-2xs transition-all cursor-pointer"
         >
-          <Star
-            size={18}
-            className={isBookmarked ? 'fill-amber-400 text-amber-500' : 'text-gray-400'}
-          />
+          <span>View details</span>
+          <ArrowRight size={14} />
         </button>
-      </div>
-
-      {/* Title */}
-      <h3 className="text-lg sm:text-xl font-extrabold text-gray-900 tracking-tight leading-snug mb-2 group-hover:text-black transition-colors">
-        {requirement.title}
-      </h3>
-
-      {/* Description */}
-      <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-5 line-clamp-2">
-        {requirement.description}
-      </p>
-
-      {/* 4 Metric Boxes Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-        <MetricBox label="BUDGET" value={requirement.budget} />
-        <MetricBox label="CLOSING" value={requirement.closing} />
-        <MetricBox label="BIDS" value={`${requirement.bidsCount} received`} />
-        <MetricBox label="FILES" value={`${requirement.filesCount} attached`} />
-      </div>
-
-      {/* Card Footer: Timestamp & Action Buttons */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-gray-100">
-        <div className="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
-          <Clock size={14} className="text-gray-400" />
-          <span>{requirement.publishedAt || 'Published recently'}</span>
-        </div>
-
-        <div className="flex items-center gap-2.5 w-full sm:w-auto">
-          <button
-            onClick={() => onViewDetails(requirement)}
-            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold text-gray-800 bg-white hover:bg-gray-50 border border-gray-200 rounded-full shadow-2xs transition-all cursor-pointer"
-          >
-            <Eye size={14} />
-            <span>View Details</span>
-          </button>
-
-          <button
-            onClick={() => onBidNow(requirement)}
-            className="flex-1 sm:flex-initial flex items-center justify-center gap-1 px-4 py-2 text-xs font-semibold text-white bg-black hover:bg-gray-800 rounded-full shadow-2xs hover:shadow transition-all cursor-pointer"
-          >
-            <span>Bid Now</span>
-            <Plus size={15} />
-          </button>
-        </div>
       </div>
 
     </div>

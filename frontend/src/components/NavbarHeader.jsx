@@ -10,7 +10,8 @@ const NavbarHeader = ({ activeTabOverride }) => {
   const getActiveTab = () => {
     if (activeTabOverride) return activeTabOverride;
     const path = location.pathname;
-    if (path === '/browse-requirements' || path === '/tenders') return 'buyers';
+    if (path === '/buyer-workspace' || path === '/my-requirements') return 'buyers';
+    if (path === '/browse-requirements' || path === '/tenders' || path === '/requirements') return 'sellers';
     if (path === '/post-requirement' || path === '/create-tender') return 'post';
     return 'home';
   };
@@ -41,7 +42,7 @@ const NavbarHeader = ({ activeTabOverride }) => {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-bold text-gray-900 leading-tight tracking-tight">
-                BidBazaar
+                SupplyNest
               </span>
               <span className="text-[11px] font-medium text-gray-500 tracking-tight">
                 Tender-style marketplace
@@ -63,7 +64,7 @@ const NavbarHeader = ({ activeTabOverride }) => {
             </button>
 
             <button
-              onClick={() => handleNavClick('buyers', '/browse-requirements')}
+              onClick={() => handleNavClick('buyers', '/buyer-workspace')}
               className={`flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-full transition-all cursor-pointer ${
                 currentTab === 'buyers'
                   ? 'text-gray-900 bg-gray-100 font-semibold shadow-2xs border border-gray-200/50'
@@ -75,7 +76,11 @@ const NavbarHeader = ({ activeTabOverride }) => {
 
             <button
               onClick={() => handleNavClick('sellers', '/browse-requirements')}
-              className="flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-full transition-colors cursor-pointer"
+              className={`flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-full transition-all cursor-pointer ${
+                currentTab === 'sellers'
+                  ? 'text-gray-900 bg-gray-100 font-semibold shadow-2xs border border-gray-200/50'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`}
             >
               <Package size={15} /> For Sellers
             </button>
@@ -131,10 +136,16 @@ const NavbarHeader = ({ activeTabOverride }) => {
               🏠 Home
             </button>
             <button
-              onClick={() => handleNavClick('buyers', '/browse-requirements')}
+              onClick={() => handleNavClick('buyers', '/buyer-workspace')}
               className="w-full text-left flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl"
             >
-              <ShoppingCart size={16} /> For Buyers (Browse)
+              <ShoppingCart size={16} /> For Buyers (Workspace)
+            </button>
+            <button
+              onClick={() => handleNavClick('sellers', '/browse-requirements')}
+              className="w-full text-left flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl"
+            >
+              <Package size={16} /> For Sellers (Browse)
             </button>
             <button
               onClick={() => handleNavClick('post', '/post-requirement')}
