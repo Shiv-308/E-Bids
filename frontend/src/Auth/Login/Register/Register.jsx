@@ -1,47 +1,56 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { SquarePen, Eye, EyeOff } from 'lucide-react';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { SquarePen, Eye, EyeOff } from "lucide-react";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState('buyer'); // 'buyer' | 'seller'
-  const [fullName, setFullName] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState("buyer"); // 'buyer' | 'seller'
+  const [fullName, setFullName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Registering with:', {
-      role,
-      fullName,
-      companyName,
-      email,
-      password,
-      confirmPassword,
-      agreeTerms,
-    });
+
+    try {
+      const response = await axios.post("http://localhost:3000/auth/Signup", {
+        fullName: companyName,
+        email: email,
+        password: password,
+      });
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] flex flex-col justify-between items-center px-4 py-8 font-sans">
-      
       {/* Spacer for vertical balance */}
       <div className="hidden sm:block"></div>
 
       {/* Main Auth Card Container */}
       <div className="w-full max-w-[520px] bg-white rounded-3xl p-7 sm:p-9 shadow-sm border border-gray-100/80 my-auto">
-        
         {/* Brand Header */}
-        <Link to="/" className="flex items-center justify-center gap-3 mb-6 group cursor-pointer text-decoration-none">
+        <Link
+          to="/"
+          className="flex items-center justify-center gap-3 mb-6 group cursor-pointer text-decoration-none"
+        >
           <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center text-white shrink-0 shadow-xs group-hover:scale-105 transition-transform">
             <SquarePen size={20} />
           </div>
           <div className="flex flex-col text-left">
-            <h2 className="text-[17px] font-bold text-gray-900 leading-tight">SupplyNest</h2>
-            <p className="text-xs text-gray-500 font-normal">Tender-style marketplace</p>
+            <h2 className="text-[17px] font-bold text-gray-900 leading-tight">
+              SupplyNest
+            </h2>
+            <p className="text-xs text-gray-500 font-normal">
+              Tender-style marketplace
+            </p>
           </div>
         </Link>
 
@@ -59,22 +68,22 @@ const Register = () => {
         <div className="bg-[#f3f4f6] p-1.5 rounded-full flex items-center mb-5">
           <button
             type="button"
-            onClick={() => setRole('buyer')}
+            onClick={() => setRole("buyer")}
             className={`w-1/2 py-2 text-xs sm:text-sm font-semibold rounded-full text-center transition-all cursor-pointer ${
-              role === 'buyer'
-                ? 'bg-white text-gray-900 shadow-xs'
-                : 'text-gray-600 hover:text-gray-900 font-medium'
+              role === "buyer"
+                ? "bg-white text-gray-900 shadow-xs"
+                : "text-gray-600 hover:text-gray-900 font-medium"
             }`}
           >
             Buyer
           </button>
           <button
             type="button"
-            onClick={() => setRole('seller')}
+            onClick={() => setRole("seller")}
             className={`w-1/2 py-2 text-xs sm:text-sm font-semibold rounded-full text-center transition-all cursor-pointer ${
-              role === 'seller'
-                ? 'bg-white text-gray-900 shadow-xs'
-                : 'text-gray-600 hover:text-gray-900 font-medium'
+              role === "seller"
+                ? "bg-white text-gray-900 shadow-xs"
+                : "text-gray-600 hover:text-gray-900 font-medium"
             }`}
           >
             Seller
@@ -83,7 +92,6 @@ const Register = () => {
 
         {/* Sign Up Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          
           {/* Full Name */}
           <div>
             <label className="block text-xs font-semibold text-gray-900 mb-1.5">
@@ -169,8 +177,13 @@ const Register = () => {
               onChange={(e) => setAgreeTerms(e.target.checked)}
               className="w-4 h-4 rounded border-gray-300 text-black focus:ring-black accent-black cursor-pointer"
             />
-            <label htmlFor="agree-terms" className="text-xs text-gray-700 font-normal cursor-pointer select-none">
-              I agree to the <span className="font-bold text-gray-900">Terms</span> and <span className="font-bold text-gray-900">Privacy Policy</span>
+            <label
+              htmlFor="agree-terms"
+              className="text-xs text-gray-700 font-normal cursor-pointer select-none"
+            >
+              I agree to the{" "}
+              <span className="font-bold text-gray-900">Terms</span> and{" "}
+              <span className="font-bold text-gray-900">Privacy Policy</span>
             </label>
           </div>
 
@@ -221,20 +234,35 @@ const Register = () => {
 
         {/* Bottom Switch Link */}
         <div className="text-center mt-6 flex items-center justify-center gap-1.5">
-          <span className="text-xs sm:text-sm text-gray-500 font-normal">Already have an account?</span>
-          <Link to="/signin" className="font-bold text-gray-900 text-xs sm:text-sm hover:underline cursor-pointer text-decoration-none">
+          <span className="text-xs sm:text-sm text-gray-500 font-normal">
+            Already have an account?
+          </span>
+          <Link
+            to="/auth/Signin"
+            className="font-bold text-gray-900 text-xs sm:text-sm hover:underline cursor-pointer text-decoration-none"
+          >
             Sign In
           </Link>
         </div>
-
       </div>
 
       {/* Footer Outside Card */}
       <footer className="mt-8 mb-2 text-xs text-gray-500 flex items-center justify-center gap-6 font-medium">
-        <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-gray-900 transition-colors">Privacy</a>
-        <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-gray-900 transition-colors">Terms</a>
+        <a
+          href="#"
+          onClick={(e) => e.preventDefault()}
+          className="hover:text-gray-900 transition-colors"
+        >
+          Privacy
+        </a>
+        <a
+          href="#"
+          onClick={(e) => e.preventDefault()}
+          className="hover:text-gray-900 transition-colors"
+        >
+          Terms
+        </a>
       </footer>
-
     </div>
   );
 };

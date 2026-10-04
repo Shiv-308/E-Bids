@@ -23,9 +23,8 @@ const App = () => {
           <Route path="/post-requirement" element={<CreateTender />} />
           <Route path="/create-tender" element={<CreateTender />} />
           <Route path="/signin" element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Register />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/auth/Signin" element={<Login />} />
+          <Route path="/auth/Signup" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </div>

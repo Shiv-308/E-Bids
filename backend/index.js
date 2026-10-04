@@ -1,11 +1,13 @@
 import express from "express";
 import cors from "cors";
+import Router from "./Routing/auth.js"
 
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use("/auth",Router)
 
 app.get("/health", (req, res) => {
   res.send("Backend is running!");
