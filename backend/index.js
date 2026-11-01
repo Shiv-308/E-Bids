@@ -7,7 +7,9 @@ const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+
 app.use("/auth",Router)
+app.use("/user",Router)
 
 app.get("/health", (req, res) => {
   res.send("Backend is running!");

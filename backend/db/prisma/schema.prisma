@@ -1,5 +1,23 @@
 // This is your Prisma schema file,
 
+enum Role {
+  BUYER
+  VENDOR
+}
+
+enum RequirementStatus {
+  OPEN
+  CLOSED
+  AWARDED
+}
+
+enum BidStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,8 +31,47 @@ model User {
   name        String
   email       String   @unique
   password    String
-  role        String?
+  role        Role     @default(BUYER)
   companyName String?
+
+  requirements Requirement[]
+  bids Bid[]
+  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Requirement {
+  id          Int               @id @default(autoincrement())
+  title       String
+  description String
+  budget      Decimal           @db.Decimal(12, 2)
+  deadline    DateTime
+  status      RequirementStatus @default(OPEN)
+
+  buyerId     Int
+  buyer       User              @relation(fields: [buyerId], references: [id])
+
+  bids Bid[]
+
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model Bid {
+  id            Int       @id @default(autoincrement())
+  amount        Decimal   @db.Decimal(12, 2)
+  proposal      String
+  status        BidStatus @default(PENDING)
+
+  vendorId      Int
+  requirementId Int
+
+  vendor        User        @relation(fields: [vendorId], references: [id])
+  requirement   Requirement @relation(fields: [requirementId], references: [id])
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([vendorId, requirementId])
 }
